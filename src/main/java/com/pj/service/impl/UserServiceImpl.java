@@ -9,8 +9,8 @@ import com.pj.dao.UserMapper;
 import com.pj.service.UserService;
 
 
-@Service("userService")
-public class UserServiceImpl implements UserService {
+@Service
+public class UserServiceImpl  implements UserService{
 	
 	@Autowired
 	private UserMapper userMapper;

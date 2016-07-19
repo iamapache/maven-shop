@@ -112,7 +112,7 @@
 									<span class="requiredField">*</span>用户名:
 								</th>
 								<td>
-									<sf:input type="text" id="username" name="username" class="text" maxlength="20" onblur="checkUsername()"/>
+									<input type="text" id="username" name="username" class="text" maxlength="20" onblur="checkUsername()"/>
 									<span id="span1" ></span>
 								</td>
 							</tr>

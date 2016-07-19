@@ -22,8 +22,9 @@ import com.pj.service.impl.UserServiceImpl;
 @RequestMapping("/user")
 public class UserController {
 	final private Logger logger = LoggerFactory.getLogger(UserController.class);
+	
 	@Autowired
-	private UserService userService;
+	private UserService userServiceImpl;
 	
 	@RequestMapping("/registPage")
 	public String registPage(){
@@ -32,17 +33,17 @@ public class UserController {
 	
 	@RequestMapping("/findByName")
 	public void selectByUsername(String username,HttpServletResponse response) throws IOException{
-		User existUser = userService.selectByUsername(username);
+		User existUser = userServiceImpl.selectByUsername(username);
 		logger.info(" 参数:{}", username);
 		response.setContentType("text/html; charset=UTF-8");
 		if(existUser !=null){
-			response.getWriter().println("<font color='red'>用户名已存在</font>");
+			response.getWriter().println(" <font color='red'>用户名已存在</font>");
 		}
 	}
 	
 	@RequestMapping("/regist")
 	public void regist(@Validated User user,BindingResult br){
-		logger.info(" 参数:{}", userService.insert(user));
+		logger.info(" 参数:{}", userServiceImpl.insert(user));
 	}
 
 }
