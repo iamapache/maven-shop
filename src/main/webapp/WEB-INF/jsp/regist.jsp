@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form" %>
+    <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+    <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -80,6 +82,7 @@
 </script>
 </head>
 <body>
+	
 <div class="container header">
 	<div class="span5">
 		<div class="logo">
@@ -105,14 +108,19 @@
 					<div>
 						<s:actionerror />
 					</div>
-					<sf:form id="registerForm" action="${ pageContext.request.contextPath }/user/regist"  method="post" novalidate="novalidate" onsubmit="return checkForm();">
+					<c:if test=" ${ AllErrors!=null} }">
+					<c:forEach items="${ AllErrors}" var="error">
+						${error.defaultMessage }
+					</c:forEach>
+					</c:if>
+					<sf:form id="registerForm" action="${ pageContext.request.contextPath }/user/regist"  method="post" modelAttribute="user" novalidate="novalidate" onsubmit="return checkForm();">
 						<table>
 							<tbody><tr>
 								<th>
 									<span class="requiredField">*</span>用户名:
 								</th>
 								<td>
-									<input type="text" id="username" name="username" class="text" maxlength="20" onblur="checkUsername()"/>
+									<sf:input path="username" type="text" id="username" name="username" class="text" maxlength="20" onblur="checkUsername()"/><sf:errors path="username"/>
 									<span id="span1" ></span>
 								</td>
 							</tr>
@@ -121,8 +129,7 @@
 									<span class="requiredField">*</span>密&nbsp;&nbsp;码:
 								</th>
 								<td>
-									<input type="password" id="password" name="password" class="text" maxlength="20" autocomplete="off"/>
-									<span><s:fielderror fieldName="password"/></span>
+									<sf:input path="password" type="password" id="password" name="password" class="text" maxlength="20" autocomplete="off"/><sf:errors path="password"/>
 								</td>
 							</tr>
 							<tr>
@@ -130,7 +137,7 @@
 									<span class="requiredField">*</span>确认密码:
 								</th>
 								<td>
-									<input id="repassword" type="password" name="repassword" class="text" maxlength="20" autocomplete="off"/>
+									<sf:input path="password" id="repassword" type="password" name="repassword" class="text" maxlength="20" autocomplete="off"/><sf:errors path="password"/>
 								</td>
 							</tr>
 							<tr>
@@ -138,8 +145,7 @@
 									<span class="requiredField">*</span>E-mail:
 								</th>
 								<td>
-									<input type="text" id="email" name="email" class="text" maxlength="200">
-									<span><s:fielderror fieldName="email"/></span>
+									<sf:input path="email" type="text" id="email" name="email" class="text" maxlength="200" /><sf:errors path="email"/>
 								</td>
 							</tr>
 									<tr>
@@ -147,8 +153,7 @@
 											姓名:
 										</th>
 										<td>
-												<input type="text" name="name" class="text" maxlength="200"/>
-												<span><s:fielderror fieldName="name"/></span>
+												<sf:input path="name"  type="text" name="name" class="text" maxlength="200"/><sf:errors path="name"/>
 										</td>
 									</tr>
 									
@@ -157,7 +162,7 @@
 											电话:
 										</th>
 										<td>
-												<input type="text" name="phone" class="text" />
+												<sf:input path="phone"  type="text" name="phone" class="text" /><sf:errors path="phone"/>
 										</td>
 									</tr>
 									
@@ -166,8 +171,7 @@
 											地址:
 										</th>
 										<td>
-												<input type="text" name="addr" class="text" maxlength="200"/>
-												<span><s:fielderror fieldName="addr"/></span>
+												<sf:input path="addr" type="text" name="addr" class="text" maxlength="200"/><sf:errors path="addr"/>
 										</td>
 									</tr>
 								<tr>

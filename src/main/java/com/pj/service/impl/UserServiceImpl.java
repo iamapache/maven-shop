@@ -7,6 +7,7 @@ import com.pj.bean.User;
 import com.pj.bean.UserExample;
 import com.pj.dao.UserMapper;
 import com.pj.service.UserService;
+import com.pj.util.UUIDUtils;
 
 
 @Service
@@ -27,8 +28,11 @@ public class UserServiceImpl  implements UserService{
 		return null;
 	}
 
-	public int insert(User record) {
-		int i = userMapper.insert(record);
+	public int insert(User user) {
+		user.setState(0);
+		String code = UUIDUtils.getUUID()+UUIDUtils.getUUID();
+		user.setCode(code);
+		int i = userMapper.insert(user);
 		return i;
 	}
 

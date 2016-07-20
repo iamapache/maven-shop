@@ -11,13 +11,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.pj.bean.User;
 import com.pj.service.UserService;
-import com.pj.service.impl.UserServiceImpl;
-
-
+//@RestController
 @Controller
 @RequestMapping("/user")
 public class UserController {
@@ -25,6 +24,12 @@ public class UserController {
 	
 	@Autowired
 	private UserService userServiceImpl;
+	
+	@ModelAttribute("user")        //① 暴露表单引用对象为模型数据  
+    public User getUser() {  
+        return new User();  
+    } 
+	
 	
 	@RequestMapping("/registPage")
 	public String registPage(){
@@ -42,8 +47,19 @@ public class UserController {
 	}
 	
 	@RequestMapping("/regist")
-	public void regist(@Validated User user,BindingResult br){
-		logger.info(" 参数:{}", userServiceImpl.insert(user));
+	public String regist(@Validated @ModelAttribute("user")User user,BindingResult br,Model model){
+		if(br.hasErrors()) {
+			//如果有错误直接跳转到add视图
+			return "regist";
+		}
+		 int i = userServiceImpl.insert(user);
+		 model.addAttribute("AllErrors", br.getAllErrors());
+		logger.info(" 参数:{}", i);
+		return "login";
 	}
 
+	@RequestMapping("/login")
+	public String login(){
+		return "login";
+	}
 }
